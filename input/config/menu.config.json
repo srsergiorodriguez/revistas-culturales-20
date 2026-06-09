@@ -1,1 +1,100 @@
-[]
+[
+    {
+        "name": "main",
+        "position": "mainMenu",
+        "items": [
+            {
+                "id": 1781021650147,
+                "label": "Inicio",
+                "title": "",
+                "type": "page",
+                "target": "_self",
+                "rel": "",
+                "link": 1,
+                "cssClass": "",
+                "isHidden": false,
+                "items": []
+            },
+            {
+                "id": 1781021664648,
+                "label": "Explorador de colecciones",
+                "title": "",
+                "type": "page",
+                "target": "_self",
+                "rel": "",
+                "link": 2,
+                "cssClass": "",
+                "isHidden": false,
+                "items": []
+            },
+            {
+                "id": 1781021683198,
+                "label": "Anotador",
+                "title": "",
+                "type": "page",
+                "target": "_self",
+                "rel": "",
+                "link": 4,
+                "cssClass": "",
+                "isHidden": false,
+                "items": []
+            },
+            {
+                "id": 1781021701298,
+                "label": "Red de participantes",
+                "title": "",
+                "type": "page",
+                "target": "_self",
+                "rel": "",
+                "link": 3,
+                "cssClass": "",
+                "isHidden": false,
+                "items": []
+            },
+            {
+                "id": 1781021712349,
+                "label": "Publicaciones",
+                "title": "",
+                "type": "page",
+                "target": "_self",
+                "rel": "",
+                "link": 5,
+                "cssClass": "",
+                "isHidden": false,
+                "items": []
+            }
+        ],
+        "maxLevels": "-1"
+    },
+    {
+        "name": "footer",
+        "position": "footerMenu",
+        "items": [
+            {
+                "id": 1781021724064,
+                "label": "Acerca",
+                "title": "",
+                "type": "page",
+                "target": "_self",
+                "rel": "",
+                "link": 7,
+                "cssClass": "",
+                "isHidden": false,
+                "items": []
+            },
+            {
+                "id": 1781021737065,
+                "label": "Créditos",
+                "title": "",
+                "type": "page",
+                "target": "_self",
+                "rel": "",
+                "link": 6,
+                "cssClass": "",
+                "isHidden": false,
+                "items": []
+            }
+        ],
+        "maxLevels": "-1"
+    }
+]

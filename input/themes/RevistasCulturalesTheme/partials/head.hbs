@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="{{ @website.language }}" data-theme="dark" >
+   <script>
+      document.documentElement.classList.add('sl-theme-dark');
+   </script>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      {{! check if a Page Title exists; if the Page Title (available under Site Settings -> SEO -> Frontpage) is empty, display the name of the website}}
+      {{#if title}}
+         <title>{{title}}</title>
+      {{else}}
+         <title>{{@website.name}}</title>
+      {{/if}}
+      {{! /check if a Page Title exists}}
+
+      {{metaDescription}}
+      {{metaRobots}}
+      {{{publiiHead}}}
+      {{canonicalLink}}
+      {{ampLink}}
+      {{feedLink}}
+      {{socialMetaTags}}
+
+      {{! check if a favicon exists; faviconUpload is a custom option included in the config.json file}}
+      {{#if @config.custom.faviconUpload}}
+	      <link rel="shortcut icon" href="{{@config.custom.faviconUpload}}" type="{{@config.custom.faviconExtension}}" />
+      {{/if}}
+      {{! /check if s favicon exists}}
+      
+      {{! check if pagination exists on the post listings (front, tag or author page)}} 
+      {{#if @pagination}}
+         {{#if @pagination.previousPage}}
+            <link rel="prev" href="{{@pagination.previousPageUrl }}">
+         {{/if}}
+         {{#if @pagination.nextPage}}
+            <link rel="next" href="{{@pagination.nextPageUrl }}">
+         {{/if}}
+      {{/if}}  
+      {{! /check if pagination exists}}
+
+      {{! import pico css }}
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+      {{#if @config.custom.fontBodyURL}}
+         <link href="https://fonts.googleapis.com/css2?family={{@config.custom.fontBodyURL}}&display=swap" rel="stylesheet">
+      {{/if}}
+
+      {{#if @config.custom.fontHeadingsURL}}
+         {{#checkIf @config.custom.fontBodyURL '!=' @config.custom.fontHeadingsURL}}
+            <link href="https://fonts.googleapis.com/css2?family={{@config.custom.fontHeadingsURL}}&display=swap" rel="stylesheet">
+         {{/checkIf}}
+      {{/if}}
+      
+      {{! import pico css }}
+      {{!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.fluid.classless.amber.min.css"> --}}
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.amber.min.css">
+
+      {{! import shoelace }}
+      <link rel="stylesheet" href="{{css "sl-theme-dark.css"}}" />
+      <link rel="stylesheet" href="{{css "style.css" }}">
+
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace.js"></script>
+
+      {{jsonLD}}
+     
+      {{! code injection by a Custom HTML tool }}
+      {{{@headCustomCode}}}
+      {{! /code injection by a Custom HTML tool }}
+
+   </head>
+ 
+   {{!-- <body> --}}
+   <body class="{{#unless posts}}no-sidebar{{/unless}} {{#if post}}no-sidebar{{/if}} {{#if page}}no-sidebar{{/if}}">
+
+      {{! code injection by a Custom HTML tool }}
+      {{{@bodyCustomCode}}}
+      {{! /code injection by a Custom HTML tool }}
