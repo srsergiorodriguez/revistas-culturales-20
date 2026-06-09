@@ -1,0 +1,11 @@
+{
+    "uuid": "uuid-1781019287794-782869424",
+    "name": "revistas-culturales-20",
+    "description": "",
+    "displayName": "Revistas Culturales 2.0",
+    "logo": {
+        "icon": "web-shirt",
+        "color": 1
+    },
+    "theme": "simple"
+}

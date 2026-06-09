@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: file:////Users/sergiorodriguez/Documents/Publii/sites/revistas-culturales-20/preview/sitemap.xml
