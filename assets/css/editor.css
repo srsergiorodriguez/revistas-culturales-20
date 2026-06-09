@@ -1,0 +1,139 @@
+/* --- MIRLA COMPONENTS VISUAL EDITOR PLACEHOLDERS --- */
+
+/* Base style for all Mirla custom elements in the editor */
+mirla-index,
+mirla-protocol,
+mirla-table,
+mirla-gallery,
+mirla-barchart,
+mirla-waffle,
+mirla-timeline,
+mirla-tree,
+mirla-network,
+mirla-map,
+mirla-preview,
+mirla-compare {
+  display: block;
+  width: 100%;
+  padding: 2rem 1rem;
+  margin: 1.5rem 0;
+  background-color: #f4f6f8;
+  border: 2px dashed #3498db;
+  border-radius: 8px;
+  text-align: center;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #555;
+  cursor: default;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Base text styling for the pseudo-elements */
+mirla-index::before,
+mirla-protocol::before,
+mirla-table::before,
+mirla-gallery::before,
+mirla-barchart::before,
+mirla-waffle::before,
+mirla-timeline::before,
+mirla-tree::before,
+mirla-network::before,
+mirla-map::before,
+mirla-preview::before,
+mirla-compare::before {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #3498db;
+}
+
+/* --- SPECIFIC COMPONENT LABELS --- */
+
+/* Index Gallery */
+mirla-index::before {
+  content: "📦 Mirla Index Gallery (Type: " attr(type) ")";
+}
+/* Fallback if type is missing or empty */
+mirla-index:not([type])::before,
+mirla-index[type=""]::before {
+  content: "📦 Mirla Index Gallery (Main Collection)";
+}
+
+/* Metadata Table */
+mirla-table::before {
+  content: "🗄️ Mirla Metadata Table";
+}
+
+/* Protocol Table */
+mirla-protocol::before {
+  content: "📖 Mirla Protocol / Data Dictionary";
+}
+
+mirla-protocol[title]::after {
+  content: "Title: " attr(title);
+}
+
+/* 3. Previews & Inline Galleries */
+mirla-preview::before {
+  content: "🖼️ Item Preview Card (PID: " attr(pid) ")";
+}
+mirla-gallery::before {
+  content: "🎞️ Inline Gallery (Filter: " attr(key) "=" attr(value) ")";
+}
+mirla-compare::before {
+  content: "🌓 Image Comparison Slider (PID 1: " attr(pid1) " | PID 2: " attr(pid2) ")";
+}
+
+/* 4. Data Visualizations */
+mirla-barchart::before { content: "📊 Bar Chart (Key: " attr(key) ")"; }
+mirla-waffle::before   { content: "🧇 Waffle Chart (Key: " attr(key) ")"; }
+mirla-timeline::before { content: "⏱️ Timeline (Date Key: " attr(datekey) ")"; }
+mirla-tree::before     { content: "🌳 Dendrogram Tree (Keys: " attr(keys) ")"; }
+mirla-network::before  { content: "🕸️ Network Graph (" attr(sourcekey) " ➔ " attr(targetkey) ")"; }
+mirla-map::before      { content: "🗺️ Geographic Map (Coord Key: " attr(coordkey) ")"; }
+
+/* ==========================================
+   PRINT SPREADS & CANVAS PLACEHOLDERS
+   ========================================== */
+
+/* 1. The outer page wrapper */
+.canvas-page {
+  display: block;
+  width: 100%;
+  padding: 2rem 1rem;
+  margin: 1.5rem 0;
+  background-color: none;
+  border: 2px dashed #3498db;
+  border-radius: 8px;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #555;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Label for the page wrapper */
+.canvas-page::before {
+  content: "📄 Canvas Page (Print Spread)";
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #3498db;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* 2. The Generative Canvas element itself */
+canvas.generative-canvas,canvas.generative-separator {
+  display: block;
+  width: 100%;
+  height: 50px; /* Gives the invisible canvas physical space in the editor */
+  margin: 1rem 0;
+  
+  background-color: #e8f0fe; 
+  background-image: linear-gradient(#d2e3fc 1px, transparent 1px), linear-gradient(90deg, #d2e3fc 1px, transparent 1px);
+  background-size: 20px 20px;
+  border: 1px solid #accce6;
+  border-radius: 4px;
+  
+  box-sizing: border-box;
+}

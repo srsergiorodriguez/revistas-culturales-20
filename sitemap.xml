@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://srsergiorodriguez.github.io/revistas-culturales-20/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<url>
+<loc>https://srsergiorodriguez.github.io/revistas-culturales-20/</loc>
+</url>
+<url>
+<loc>https://srsergiorodriguez.github.io/revistas-culturales-20/acerca.html</loc>
+<lastmod>2026-06-09T11:13:40-05:00</lastmod>
+</url>
+<url>
+<loc>https://srsergiorodriguez.github.io/revistas-culturales-20/anotador-de-objetos.html</loc>
+<lastmod>2026-06-09T11:13:11-05:00</lastmod>
+</url>
+<url>
+<loc>https://srsergiorodriguez.github.io/revistas-culturales-20/creditos.html</loc>
+<lastmod>2026-06-09T11:13:32-05:00</lastmod>
+</url>
+<url>
+<loc>https://srsergiorodriguez.github.io/revistas-culturales-20/explorador-de-colecciones.html</loc>
+<lastmod>2026-06-09T11:11:48-05:00</lastmod>
+</url>
+<url>
+<loc>https://srsergiorodriguez.github.io/revistas-culturales-20/publicaciones.html</loc>
+<lastmod>2026-06-09T11:13:20-05:00</lastmod>
+</url>
+<url>
+<loc>https://srsergiorodriguez.github.io/revistas-culturales-20/red-de-participantes.html</loc>
+<lastmod>2026-06-09T11:12:50-05:00</lastmod>
+</url>
+</urlset>

@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://srsergiorodriguez.github.io/revistas-culturales-20/sitemap.xml
