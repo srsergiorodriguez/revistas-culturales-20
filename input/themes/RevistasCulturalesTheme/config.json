@@ -139,49 +139,6 @@
             "type": "checkbox"
         },
         {
-            "name": "separator",
-            "type": "separator",
-            "label": "Column sections",
-            "group": "Layout",
-            "size": "small"
-        },
-        {
-            "name": "mainWidth",
-            "label": "Main width",
-            "group": "Layout",
-            "value": "1100px",
-            "type": "text"
-        },
-        {
-            "name": "sidebarWidth",
-            "label": "Sidebar width",
-            "group": "Layout",
-            "value": "300px",
-            "type": "text"
-        },
-        {
-            "name": "separator",
-            "type": "separator",
-            "label": "Selected Posts",
-            "group": "Sidebar",
-            "size": "small"
-        },
-        {
-            "name": "selectedPosts",
-            "label": "Source",
-            "group": "Sidebar",
-            "note": "Display posts from the specified tag",
-            "value": "",
-            "type": "tags-dropdown"
-        },
-        {
-            "name": "amountSelectedtPosts",
-            "label": "Number of posts",
-            "group": "Sidebar",
-            "value": "3",
-            "type": "text"
-        },
-        {
             "name": "fontSize",
             "label": "Font size",
             "group": "Fonts",
@@ -193,42 +150,34 @@
             "step": 1
         },
         {
-            "label": "Google Fonts Configuration",
-            "group": "Fonts",
-            "type": "separator",
-            "note": "To customize your fonts: <br>1. Go to <a href='https://fonts.google.com' target='_blank'>fonts.google.com</a> and select your styles.<br>2. In the 'Embed Code' section, look for the <code>family=</code> part of the URL.<br>3. Copy the part after the equals sign into the <b>URL Segment</b> field (e.g., <code>Libre+Baskerville:wght@700</code>).<br>4. Enter the simple name in the <b>Family Name</b> field (e.g., <code>Libre Baskerville</code>)."
-        },
-        {
-            "name": "fontHeadingsName",
-            "label": "Headings Font Family Name",
-            "group": "Fonts",
-            "note": "(e.g. 'Libre Baskerville')",
-            "value": "Libre Baskerville",
-            "type": "text"
-        },
-        {
-            "name": "fontHeadingsURL",
-            "label": "Headings Font Google URL Segment",
-            "group": "Fonts",
-            "note": "(e.g. Libre+Baskerville:wght@700)",
-            "value": "Libre+Baskerville:wght@700",
-            "type": "text"
-        },
-        {
-            "name": "fontBodyName",
-            "label": "Body Font Family Name",
-            "group": "Fonts",
-            "note": "(e.g. 'Inter')",
-            "value": "Inter",
-            "type": "text"
-        },
-        {
-            "name": "fontBodyURL",
-            "label": "Body Font Google URL Segment",
-            "group": "Fonts",
-            "note": "(e.g. Inter:wght@400;700)",
-            "value": "Inter:wght@400;700",
-            "type": "text"
+            "name": "footerLogos",
+            "label": "Footer Ally Logos",
+            "group": "Footer Settings",
+            "note": "Add logos for project allies. They will automatically size themselves to fit the layout.",
+            "type": "repeater",
+            "value": [],
+            "maxCount": -1,
+            "hasEmptyState": true,
+            "translations": {
+                "addItem": "Add New Logo",
+                "emptyState": "No logos added yet. Click the button to add your first ally.",
+                "removeItem": "Remove"
+            },
+            "structure": [
+                {
+                "name": "logoImage",
+                "label": "Upload Logo",
+                "type": "upload",
+                "width": 50
+                },
+                {
+                "name": "logoLink",
+                "label": "Website Link (Optional)",
+                "type": "text",
+                "placeholder": "https://...",
+                "width": 50
+                }
+            ]
         }
     ],
     "authorConfig": [

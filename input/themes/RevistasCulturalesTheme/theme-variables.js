@@ -9,11 +9,7 @@ var generateThemeVariables = function(themeConfig, postConfig, commonConfig, pag
 
    output += ` 
       :root {
-            --main-width:   ${themeConfig.mainWidth};
-            --sidebar-width:  ${themeConfig.sidebarWidth};
             --pico-font-size: ${themeConfig.fontSize}px;
-            --pico-font-family: ${themeConfig.fontBodyName};
-            --pico-font-family-heading: ${themeConfig.fontHeadingsName};
             ${rowSectionBorder}
       }`;
 

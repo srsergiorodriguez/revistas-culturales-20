@@ -40,20 +40,6 @@
          {{/if}}
       {{/if}}  
       {{! /check if pagination exists}}
-
-      {{! import pico css }}
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-      {{#if @config.custom.fontBodyURL}}
-         <link href="https://fonts.googleapis.com/css2?family={{@config.custom.fontBodyURL}}&display=swap" rel="stylesheet">
-      {{/if}}
-
-      {{#if @config.custom.fontHeadingsURL}}
-         {{#checkIf @config.custom.fontBodyURL '!=' @config.custom.fontHeadingsURL}}
-            <link href="https://fonts.googleapis.com/css2?family={{@config.custom.fontHeadingsURL}}&display=swap" rel="stylesheet">
-         {{/checkIf}}
-      {{/if}}
       
       {{! import pico css }}
       {{!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.fluid.classless.amber.min.css"> --}}
@@ -74,7 +60,7 @@
    </head>
  
    {{!-- <body> --}}
-   <body class="{{#unless posts}}no-sidebar{{/unless}} {{#if post}}no-sidebar{{/if}} {{#if page}}no-sidebar{{/if}}">
+   <body>
 
       {{! code injection by a Custom HTML tool }}
       {{{@bodyCustomCode}}}

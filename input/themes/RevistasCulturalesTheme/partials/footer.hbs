@@ -5,6 +5,25 @@
       {{> menu menus.footerMenu}}
    {{/if}}
    {{! /checks if any menu is assigned to the Footer menu position }}
+
+   {{! --- DYNAMIC ALLY LOGOS --- }}
+   {{#if @config.custom.footerLogos}}
+      <div class="footer-logos">
+         {{! Iterates through the repeater items you defined in config.json }}
+         {{#each @config.custom.footerLogos}}
+            {{#if logoImage}}
+               {{! If a link was provided, wrap the image in an anchor tag. If not, just render the image. }}
+               {{#if logoLink}}
+                  <a href="{{logoLink}}" target="_blank" rel="noopener">
+                     <img src="{{logoImage}}" alt="Project Ally">
+                  </a>
+               {{else}}
+                  <img src="{{logoImage}}" alt="Project Ally">
+               {{/if}}
+            {{/if}}
+         {{/each}}
+      </div>
+   {{/if}}
    
 </footer>
 

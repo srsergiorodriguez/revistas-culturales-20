@@ -31,14 +31,16 @@
                {{! /post author }}
             </div>
 
-            <div class="main-tag">
-               {{! main tag - if not selected, the first tag in the list of all tags will be displayed }}
-               {{#if mainTag}}
-                  <a href="{{ mainTag.url }}" class="post__maintag">
-                     {{mainTag.name}}
-                  </a>
+            <div class="post-tags">
+               {{! check if the post has any tags }}
+               {{#if tags}}
+                  {{! loop through all tags }}
+                  {{#each tags}}
+                     <a href="{{url}}" class="post__tag">
+                        {{name}}
+                     </a>
+                  {{/each}}
                {{/if}}
-               {{! /main tag }}
             </div>
 
             {{! post creation date }}
@@ -101,77 +103,28 @@
          {{! checks if there are any posts besides the current one; including ../ segment on a path, we change the post context into the parent context }}
          {{#checkIfAny ../previousPost ../nextPost}}
             <nav id="post-navigation">
-               {{#../previousPost}}
-                  <a href="{{url}}" rel="prev">
-                     &larr; {{ translate 'post.previousPost' }}
-                     ({{title}})
-                  </a>
-               {{/../previousPost}}
-
-               {{#../nextPost}}
-                  <a href="{{url}}" rel="next">
-                     {{ translate 'post.nextPost' }}
-                     ({{title}}) &rarr;
-                  </a>
-               {{/../nextPost}}
+               <div class="nav-prev">
+                  {{#../previousPost}}
+                     <a href="{{url}}" rel="prev">
+                        &larr; {{ translate 'post.previousPost' }}
+                     </a>
+                  {{/../previousPost}}
+               </div>
+               <div class="nav-next">
+                  {{#../nextPost}}
+                     <a href="{{url}}" rel="next">
+                        {{ translate 'post.nextPost' }} &rarr;
+                     </a>
+                  {{/../nextPost}}
+               </div>
             </nav>
          {{/checkIfAny}}
          {{! /checks if there are any posts besides the current one }}
          {{! /previous & next post }}
 
-         <br/>
-
-         {{! related posts - defined in config.json file in the "renderer" section }}
-         {{! checks if there is any related post; including ../ segment on a path, we change the post context into the parent context }}
-         {{#if ../relatedPosts}}
-            <div id="related-posts">
-               <h3>
-                  {{ translate 'post.relatedPosts' }}
-               </h3>
-               <div>
-
-                  {{! loop that generates a list of related posts}}
-                  {{#each ../relatedPosts}}
-                     <section>
-                        {{#featuredImage}}
-                           {{#if url}}
-                              <a href="{{../url}}" >
-                                 <img
-                                    src="{{url}}"
-                                    {{#if @config.site.responsiveImages}}
-                                       {{responsiveImageAttributes 'featuredImage' srcset sizes}}
-                                    {{/if}}
-                                    {{ lazyload "lazy" }}
-                                    height="{{height}}"
-                                    width="{{width}}"
-                                    alt="{{alt}}">
-                              </a>
-                           {{/if}}
-                        {{/featuredImage}}
-
-                        <h4>
-                           <a href="{{url}}">{{title}}</a>
-                        </h4>
-
-                        <p>{{{ excerpt }}}</p>
-
-                     </section>
-                  {{/each}}
-                  {{! /loop that generates a list of related posts}}
-
-               </div>
-            </div>
-         {{/if}}
-         {{! /check if there is any related post }}
-         {{! /related posts }}
-
       </article>
    {{/post}}
    {{! /indicates the post's context}}
-
-   {{! display comments plugin: it requires the "customComments" flag to be enabled in the "supportedFeatures" section of the config.json file}}
-      {{{@commentsCustomCode}}}
-   {{! /display comments plugin}}
 
    {{! code injection by a Custom HTML tool - defined in config.json file in the renderer section}}
    {{#if @customHTML.afterPost}}
@@ -182,8 +135,5 @@
    {{! injects code via a Custom HTML tool }}
 
 </main>
-{{!-- <aside>
-   {{> sidebar}}
-</aside> --}}
 
 {{> footer}}

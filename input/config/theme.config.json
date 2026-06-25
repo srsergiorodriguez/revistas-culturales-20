@@ -4,7 +4,7 @@
         "tagsPostsPerPage": 5,
         "authorsPostsPerPage": 5,
         "excerptLength": 25,
-        "logo": ""
+        "logo": "media/website/RevistasCulturales.png"
     },
     "customConfig": {
         "showIntroText": true,
@@ -13,15 +13,15 @@
         "faviconUpload": "",
         "faviconExtension": "image/x-icon",
         "rowSectionBorder": true,
-        "mainWidth": "1100px",
-        "sidebarWidth": "300px",
-        "selectedPosts": "",
-        "amountSelectedtPosts": "3",
         "fontSize": "16",
-        "fontHeadingsName": "Merriweather Sans",
-        "fontHeadingsURL": "Merriweather+Sans:ital,wght@0,300..800;1,300..800",
-        "fontBodyName": "Inter",
-        "fontBodyURL": "Inter:wght@400;700"
+        "footerLogos": [
+            {
+                "logoImage": "media/website/logoTubingen.png"
+            },
+            {
+                "logoImage": "media/website/logoExploratorio.png"
+            }
+        ]
     },
     "postConfig": {},
     "pageConfig": {},

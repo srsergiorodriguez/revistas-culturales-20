@@ -1,10 +1,10 @@
-<header>
+<header class="main-header">
 
    {{! @website global variable used to display a logo and website name  }}
    {{! check if a Website logo exists, if not, dispaly the website name }}
    <a id="logo" class="main-title custom-link" href="{{@website.url}}">
       {{#if @website.logo}}
-         <img src="{{@website.logo}}" alt="{{@website.name}}">
+         <img src="{{@website.logo}}" alt="{{@website.name}}" style="max-width: 350px;">
       {{else}}
          <h1>{{@website.name}}</h1>
       {{/if}}
