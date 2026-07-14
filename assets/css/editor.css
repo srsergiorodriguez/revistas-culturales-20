@@ -1,4 +1,11 @@
-contributors-table {
+contributors-table, 
+repository-gallery,
+repository-index,
+repository-barchart,
+repository-preview,
+repository-map,
+repository-network,
+repository-timeline {
   display: block;
   width: 100%;
   padding: 5px;
@@ -11,7 +18,14 @@ contributors-table {
 }
 
 /* Base text styling for the pseudo-elements */
-contributors-table::before {
+contributors-table::before,
+repository-gallery::before,
+repository-index::before,
+repository-barchart::before,
+repository-preview::before,
+repository-map::before,
+repository-network::before,
+repository-timeline::before {
   display: block;
   color: #000000;
 }
@@ -19,4 +33,32 @@ contributors-table::before {
 /* --- SPECIFIC COMPONENT LABELS --- */
 contributors-table::before {
   content: "Contributors table: " attr(src) "";
+}
+
+repository-gallery::before {
+  content: "Repository Gallery";
+}
+
+repository-index::before {
+  content: "Repository Index";
+}
+
+repository-barchart::before {
+  content: "Repository Barchart: " attr(key) "";
+}
+
+repository-preview::before {
+  content: "Repository Preview: " attr(id) "";
+}
+
+repository-map::before {
+  content: "Repository Map";
+}
+
+repository-network::before {
+  content: "Repository Network: " attr(sourceKey) " -> " attr(targetKey) "";
+}
+
+repository-timeline::before {
+  content: "Repository Timeline: " attr(yKey) "";
 }
