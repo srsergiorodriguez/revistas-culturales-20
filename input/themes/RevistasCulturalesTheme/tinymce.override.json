@@ -1,4 +1,4 @@
 {
-  "extended_valid_elements": ["contributors-table[*]"],
-  "custom_elements": ["contributors-table"]
+  "extended_valid_elements": ["contributors-table[*]", "repository-gallery[*]", "repository-index[*]", "repository-barchart[*]", "repository-preview[*]", "repository-map[*]","repository-network[*]","repository-timeline[*]"],
+  "custom_elements": ["contributors-table", "repository-gallery", "repository-index", "repository-barchart", "repository-preview", "repository-map", "repository-network","repository-timeline"]
 }

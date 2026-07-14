@@ -1,0 +1,1 @@
+wget --continue --mirror --convert-links --adjust-extension --page-requisites --no-parent --timeout=15 --tries=3 --wait=2 --random-wait --no-check-certificate https://www.revistas-culturales.de

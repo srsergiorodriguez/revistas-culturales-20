@@ -1,1 +1,8 @@
 import "./ContributorsTable.svelte"
+import "./RepositoryGallery.svelte"
+import "./RepositoryIndex.svelte"
+import "./RepositoryPreview.svelte"
+import "./RepositoryBarchart.svelte"
+import "./RepositoryMap.svelte"
+import "./RepositoryNetwork.svelte"
+import "./RepositoryTimeline.svelte"

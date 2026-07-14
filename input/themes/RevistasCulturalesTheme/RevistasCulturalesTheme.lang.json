@@ -41,6 +41,7 @@
       "downloadCSV": "Descargar CSV",
       "clearSearch": "Borrar búsqueda",
       "noRecordsFound": "No se encontraron resultados",
+      "noImage": "Sin imagen",
       "collectionMetadata": "Metadatos de la colección",
       "dataDictionary": "Protocolo de Datos",
       "protocolAttr": "Atributo",

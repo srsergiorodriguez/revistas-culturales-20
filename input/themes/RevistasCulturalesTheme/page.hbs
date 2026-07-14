@@ -46,12 +46,18 @@
             mediaUrl: "{{@website.mediaFilesUrl}}",
             i18n: {
               searchPlaceholder: "{{translate 'custom.searchPlaceholder' fallback='Search...'}}",
+              resultsFound: "{{translate 'custom.resultsFound' fallback='results found'}}",
+              all: "{{translate 'custom.all' fallback='All'}}",
+              clearSearch: "{{translate 'custom.clearSearch' fallback='Clear Search'}}",
+              noRecordsFound: "{{translate 'custom.noRecordsFound' fallback='No records found'}}",
+              noImage: "{{translate 'custom.noImage' fallback='No image'}}",
             }
           };
           </script>
 
           {{!-- 2. Load the data payloads --}}
           <script defer src="{{@website.mediaFilesUrl}}/contributors.js"></script>
+          <script defer src="{{@website.mediaFilesUrl}}/repositories.js"></script>
 
           {{!-- 3. Load the compiled Web Components --}}
           <script defer src="{{js "custom-components.js"}}"></script>
