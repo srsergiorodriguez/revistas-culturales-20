@@ -35,7 +35,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colección curada con estudios críticos",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-001.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-001.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-001-thumb.webp"
     ]
   },
   {
@@ -74,7 +77,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colección de revistas españolas",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-002.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-002.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-002-thumb.webp"
     ]
   },
   {
@@ -113,7 +119,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colección curada con estudios críticos, índices razonados y buscador",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-003.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-003.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-003-thumb.webp"
     ]
   },
   {
@@ -152,7 +161,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Subcolección de revistas publicadas en los países caribeños. Recoge digitalizaciones de distintas instituciones aliadas. La colección de periódicos es más amplia.",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-004.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-004.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-004-thumb.webp"
     ]
   },
   {
@@ -191,7 +203,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colección de revistas de la Edad de Plata, con transcripción y visualización interactiva.",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-005.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-005.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-005-thumb.webp"
     ]
   },
   {
@@ -230,7 +245,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Portal de revistas iberomericanas, principalmente españolas, con distintas colecciones prensa temáticas.",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-006.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-006.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-006-thumb.webp"
     ]
   },
   {
@@ -269,7 +287,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Portal cooperativo de publicaciones periódicas representativas de la cultura y sociedad catalana.",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-007.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-007.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-007-thumb.webp"
     ]
   },
   {
@@ -308,7 +329,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Subportal de la BVMC dedicado a publicaciones periódicas publicadas en España y América. Ofrece datos abiertos enlazados (RDF) y un Enpoint de consulta SPARQL.",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-008.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-008.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-008-thumb.webp"
     ]
   },
   {
@@ -347,7 +371,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colección de revistas y periódicos editadas en Madrid.",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-009.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-009.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-009-thumb.webp"
     ]
   },
   {
@@ -386,7 +413,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colección de revistas chilenas.",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-010.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-010.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-010-thumb.webp"
     ]
   },
   {
@@ -425,7 +455,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colección de revistas con estudios dedicados, contextualizadas y de interés para la construcción de la historia cultural chilena.",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-011.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-011.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-011-thumb.webp"
     ]
   },
   {
@@ -464,7 +497,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colecciones de publicaciones periódicas históricas y contemporáneas. Hace parte del proyecto Oceanic Exchanged. ",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-012.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-012.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-012-thumb.webp"
     ]
   },
   {
@@ -503,7 +539,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colección de publicaciones periódicas uruguayas. Acceso a través de repositorio DSpace..",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-013.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-013.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-013-thumb.webp"
     ]
   },
   {
@@ -542,7 +581,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colección de revistas de Argentina, Brasil, Chile, Colombia, Cuba, Ecuador, Perú y Puerto Rico",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-014.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-014.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-014-thumb.webp"
     ]
   },
   {
@@ -581,7 +623,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colección de publicaciones periódicas de izquierda latinoamericanas y otras editadas en China, la extinta Unión Soviética y Estados Unidos.",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-015.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-015.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-015-thumb.webp"
     ]
   },
   {
@@ -620,7 +665,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colección de revistas colombianas editadas en Medellín, Bogotá y Londres.",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-016.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-016.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-016-thumb.webp"
     ]
   },
   {
@@ -659,7 +707,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colección de revistas colombianas",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-017.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-017.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-017-thumb.webp"
     ]
   },
   {
@@ -698,7 +749,10 @@ window.REPOSITORIES_DATA = [
     "estado_enlace": "activo",
     "notas": "Colección de publicaciones periódicas colombianas e índices análiticos de algunas de ellas.",
     "images": [
-      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-018.png"
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-018.webp"
+    ],
+    "thumbnails": [
+      "https://srsergiorodriguez.github.io/revistas-culturales-20/media/files/imagenes-repositorios/REP-018-thumb.webp"
     ]
   }
 ];
