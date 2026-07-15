@@ -152,7 +152,10 @@
       <div class="preview-item">
         <a href="{siteDomain}item/{item.pid}/index.html" class="card-link">
           <div class="image-container">
-            {#if item.images && item.images.length > 0}
+            <!-- Updated to prioritize thumbnails -->
+            {#if item.thumbnails && item.thumbnails.length > 0}
+              <img src={item.thumbnails[0]} alt={item['label'] || item.pid} loading="lazy" />
+            {:else if item.images && item.images.length > 0}
               <img src={item.images[0]} alt={item['label'] || item.pid} loading="lazy" />
             {:else}
               <div class="no-image-placeholder"></div>

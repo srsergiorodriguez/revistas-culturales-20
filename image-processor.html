@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Procesador de Imágenes - Repositorios</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <style>
+    body { padding: 2rem 0; }
+    .click-zone {
+      border: 2px dashed var(--pico-muted-border-color);
+      border-radius: var(--pico-border-radius);
+      padding: 3rem 1rem;
+      text-align: center;
+      background: var(--pico-form-element-background-color);
+      cursor: pointer;
+      transition: border-color 0.2s, background-color 0.2s;
+      display: block;
+    }
+    .click-zone:hover {
+      border-color: var(--pico-primary);
+      background: var(--pico-mark-background-color);
+    }
+    .log-area {
+      max-height: 250px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 0.85rem;
+      background: var(--pico-code-background-color);
+      padding: 1rem;
+      border-radius: var(--pico-border-radius);
+      margin-top: 1rem;
+    }
+    .log-success { color: #27ae60; }
+    .log-error { color: #e74c3c; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <hgroup>
+      <h1>Procesador de Imágenes</h1>
+      <p>Selecciona la carpeta original de imágenes de los repositorios. El sistema generará versiones optimizadas y te devolverá un ZIP con el mismo nombre.</p>
+    </hgroup>
+
+    <label class="click-zone" id="click-zone">
+      <strong>Haz clic aquí para seleccionar la carpeta de imágenes</strong>
+      <!-- webkitdirectory allows selecting whole folders via the native file dialog -->
+      <input type="file" id="file-input" webkitdirectory directory multiple style="display: none;">
+    </label>
+
+    <article id="progress-container" style="display: none; margin-top: 2rem;">
+      <header>
+        <strong id="status-text">Procesando carpeta...</strong>
+      </header>
+      <progress id="progress-bar" value="0" max="100"></progress>
+      <div class="log-area" id="log-area"></div>
+      <footer style="text-align: right;">
+        <button id="download-btn" disabled>Descargar ZIP</button>
+      </footer>
+    </article>
+  </main>
+
+  <script>
+    const fileInput = document.getElementById('file-input');
+    const progressContainer = document.getElementById('progress-container');
+    const progressBar = document.getElementById('progress-bar');
+    const statusText = document.getElementById('status-text');
+    const logArea = document.getElementById('log-area');
+    const downloadBtn = document.getElementById('download-btn');
+
+    let zip = new JSZip();
+    let currentFolderName = "imagenes-optimizadas"; 
+
+    const MAIN_IMG_MAX_WIDTH = 1200;
+    const THUMB_IMG_MAX_WIDTH = 700;
+    const WEBP_QUALITY = 0.8;
+
+    // --- Native File Input Handler ---
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        const firstFile = e.target.files[0];
+        // Extract folder name from the relative path if available
+        if (firstFile.webkitRelativePath) {
+            currentFolderName = firstFile.webkitRelativePath.split('/')[0];
+        } else {
+            currentFolderName = "imagenes-optimizadas";
+        }
+        // Convert FileList to standard Array
+        processFiles(Array.from(e.target.files));
+      }
+    });
+
+    // --- Processing Logic ---
+    function log(message, type = 'info') {
+      const el = document.createElement('div');
+      el.textContent = message;
+      if (type === 'success') el.className = 'log-success';
+      if (type === 'error') el.className = 'log-error';
+      logArea.appendChild(el);
+      logArea.scrollTop = logArea.scrollHeight;
+    }
+
+    async function processFiles(files) {
+      // Filter out hidden files (like .DS_Store) and non-images
+      const imageFiles = files.filter(file => file.type.startsWith('image/') && !file.name.startsWith('.'));
+      
+      if (imageFiles.length === 0) {
+        alert("No se encontraron imágenes válidas en la carpeta seleccionada.");
+        // Reset the input so the user can select again without refreshing
+        fileInput.value = ''; 
+        return;
+      }
+
+      zip = new JSZip();
+      logArea.innerHTML = '';
+      progressContainer.style.display = 'block';
+      downloadBtn.disabled = true;
+      progressBar.max = imageFiles.length * 2; 
+      progressBar.value = 0;
+      statusText.textContent = `Procesando carpeta "${currentFolderName}" (${imageFiles.length} imágenes)...`;
+
+      for (const file of imageFiles) {
+        try {
+          const baseName = file.name.substring(0, file.name.lastIndexOf('.'));
+          const bitmap = await createImageBitmap(file);
+          
+          // Generate main optimized WebP
+          const mainBlob = await resizeImage(bitmap, MAIN_IMG_MAX_WIDTH);
+          zip.file(`${baseName}.webp`, mainBlob);
+          progressBar.value++;
+          
+          // Generate thumbnail WebP
+          const thumbBlob = await resizeImage(bitmap, THUMB_IMG_MAX_WIDTH);
+          zip.file(`${baseName}-thumb.webp`, thumbBlob);
+          progressBar.value++;
+          
+          log(`✓ Procesado: ${file.name}`, 'success');
+        } catch (error) {
+          log(`✗ Error procesando ${file.name}: ${error.message}`, 'error');
+        }
+      }
+
+      statusText.textContent = "¡Carpeta procesada completamente!";
+      downloadBtn.textContent = `Descargar ${currentFolderName}.zip`;
+      downloadBtn.disabled = false;
+      
+      // Reset input for future selections
+      fileInput.value = '';
+    }
+
+    function resizeImage(bitmap, maxWidth) {
+      return new Promise((resolve) => {
+        let width = bitmap.width;
+        let height = bitmap.height;
+
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(bitmap, 0, 0, width, height);
+
+        canvas.toBlob((blob) => {
+          resolve(blob);
+        }, 'image/webp', WEBP_QUALITY);
+      });
+    }
+
+    // --- Download Logic ---
+    downloadBtn.addEventListener('click', async () => {
+      downloadBtn.setAttribute('aria-busy', 'true');
+      downloadBtn.textContent = "Generando archivo...";
+      
+      const content = await zip.generateAsync({ type: 'blob' });
+      const url = URL.createObjectURL(content);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${currentFolderName}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      downloadBtn.removeAttribute('aria-busy');
+      downloadBtn.textContent = `Descargar ${currentFolderName}.zip`;
+    });
+  </script>
+</body>
+</html>

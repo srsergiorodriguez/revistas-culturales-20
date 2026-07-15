@@ -182,12 +182,13 @@
       {i18n.noRecordsFound}
      </div>
   {:else}
-    <!-- NEW: Added bind:this={gridElement} to track columns -->
     <div class="gallery-grid" bind:this={gridElement}>
       {#each paginatedItems as item, index (item.id || index)}
         <a href="{item.url || '#'}" target="_blank" rel="noopener noreferrer" class="gallery-item">
           <div class="image-wrapper">
-            {#if item.images && item.images.length > 0}
+            {#if item.thumbnails && item.thumbnails.length > 0}
+              <img src={item.thumbnails[0]} alt={item.name || item.nombre || item.id} loading="lazy" />
+            {:else if item.images && item.images.length > 0}
               <img src={item.images[0]} alt={item.name || item.nombre || item.id} loading="lazy" />
             {:else}
               <div class="no-img">{i18n.noImage}</div>

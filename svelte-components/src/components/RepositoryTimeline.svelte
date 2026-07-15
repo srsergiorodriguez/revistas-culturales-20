@@ -9,7 +9,7 @@
     startKey = "fecha_inicio", 
     endKey = "fecha_fin",
     yKey = "coleccion", 
-    itemsPerPage = "10", // Added default items per page limit
+    itemsPerPage = "10",
     color = "var(--pico-primary, #4a90e2)", 
     accent = "var(--pico-secondary, #ffcc00)" 
   } = $props();
@@ -23,7 +23,6 @@
   let activeCategory = $state(null);
   let zoomHandler;
   
-  // Pagination State
   let currentPage = $state(0);
 
   function parseMirlaDate(val) {
@@ -65,22 +64,19 @@
     }).sort((a, b) => d3.ascending(a.start, b.start));
   });
 
-  // Pagination Logic
   let limit = $derived(parseInt(itemsPerPage, 10) || 10);
   let totalPages = $derived(Math.ceil(timelineData.length / limit));
   let paginatedData = $derived(
     timelineData.slice(currentPage * limit, (currentPage + 1) * limit)
   );
 
-  // Keep pagination in bounds if data changes
   $effect(() => {
     if (currentPage >= totalPages && totalPages > 0) {
       currentPage = totalPages - 1;
     }
   });
 
-  // Calculate height based on the currently visible page of data
-  let chartHeight = $derived(paginatedData.length > 0 ? (paginatedData.length * 55) + 60 : 200);
+  let chartHeight = $derived(paginatedData.length > 0 ? (paginatedData.length * 65) + 60 : 200);
 
   function handleReset() {
     selectedItems = [];
@@ -108,7 +104,7 @@
 
     const width = svgElement.parentElement.clientWidth;
     const height = chartHeight;
-    const margin = { top: 20, right: 40, bottom: 40, left: 250 };
+    const margin = { top: 20, right: 40, bottom: 40, left: 220 };
 
     svg.attr("viewBox", [0, 0, width, height]);
 
@@ -121,13 +117,11 @@
       .attr("width", width - margin.left - margin.right)
       .attr("height", height);
 
-    // Global X Scale: Keeps context between pages by using the full timelineData domain
     const x = d3.scaleTime()
       .domain([d3.min(timelineData, d => d.start), d3.max(timelineData, d => d.end)])
       .range([margin.left, width - margin.right])
       .nice();
 
-    // Local Y Scale: Maps only the currently paginated items
     const y = d3.scaleBand()
       .domain(paginatedData.map(d => d.label))
       .range([margin.top, height - margin.bottom])
@@ -203,6 +197,7 @@
         .attr("width", d => Math.max(2, x(d.end) - x(d.start)));
   }
 
+  // UPDATED: Robust wrapping with explicit Y positioning and automatic vertical centering
   function wrapText(text, width) {
     text.each(function() {
       let textNode = d3.select(this),
@@ -211,19 +206,36 @@
           line = [],
           lineNumber = 0,
           lineHeight = 1.2, 
-          yAttr = textNode.attr("y"),
-          dy = parseFloat(textNode.attr("dy") || 0.32),
-          tspan = textNode.text(null).append("tspan").attr("x", -12).attr("y", yAttr).attr("dy", dy + "em");
+          dy = parseFloat(textNode.attr("dy") || 0.32);
+          
+      textNode.text(null);
+      
+      let tspan = textNode.append("tspan")
+        .attr("x", -12)
+        .attr("y", 0) // Explicitly lock to the tick baseline
+        .attr("dy", dy + "em");
+      
       while (word = words.pop()) {
         line.push(word);
         tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
+        if (tspan.node().getComputedTextLength() > width && line.length > 1) {
           line.pop();
           tspan.text(line.join(" "));
           line = [word];
-          tspan = textNode.append("tspan").attr("x", -12).attr("y", yAttr).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          tspan = textNode.append("tspan")
+            .attr("x", -12)
+            .attr("y", 0) // Lock every new line to the baseline
+            .attr("dy", `${++lineNumber * lineHeight + dy}em`)
+            .text(word);
         }
       }
+
+      // Automatically shift the entire text block up to center it based on the number of lines
+      const yOffset = (lineNumber * lineHeight) / 2;
+      textNode.selectAll("tspan").attr("dy", function() {
+          const currentDy = parseFloat(d3.select(this).attr("dy"));
+          return (currentDy - yOffset) + "em";
+      });
     });
   }
 
@@ -234,12 +246,10 @@
 
   onDestroy(() => resizeObserver?.disconnect());
   
-  // Re-draw when paginated data or styling changes
   $effect(() => { paginatedData; color; accent; drawTimeline(); });
 </script>
 
 <div class="viz-container">
-  <!-- TOP PAGINATOR (Optional, helpful if placed before the chart) -->
   {#if totalPages > 1}
     <div class="pager-container" style="margin-top: 0;">
       <button class="pager-btn outline" disabled={currentPage === 0} onclick={() => { currentPage--; handleReset(); }}>«</button>
@@ -266,7 +276,6 @@
     />
   {/if}
   
-  <!-- BOTTOM PAGINATOR -->
   {#if totalPages > 1}
     <div class="pager-container">
       <button class="pager-btn outline" disabled={currentPage === 0} onclick={() => { currentPage--; handleReset(); }}>«</button>
@@ -278,6 +287,11 @@
 
 <style>
   @import '../styles/global-styles.css';
+
+  .viz-container {
+    /* Explicitly supply the border variable so the paginator buttons render correctly */
+    --app-border: color-mix(in srgb, var(--pico-color, currentColor) 20%, transparent);
+  }
 
   svg {
     width: 100%;

@@ -56,7 +56,7 @@
     selectedItems = [];
     activeCategory = null;
     if (svgElement) {
-      d3.select(svgElement).selectAll("rect")
+      d3.select(svgElement).selectAll(".barchart-bar") // Explicit class selection
         .transition().duration(300)
         .attr("opacity", 1);
     }
@@ -94,13 +94,11 @@
 
     const colorScale = d3.scaleOrdinal().range(categoricalPalette);
 
-    // Filter D3's automatic ticks to only include integers
     const suggestedTicks = x.ticks(Math.max(width / 80, 2));
     const integerTicks = suggestedTicks.filter(t => Number.isInteger(t));
 
     const xAxis = g => g
       .attr("transform", `translate(0,${height - margin.bottom})`)
-      // Apply the filtered integer ticks here
       .call(d3.axisBottom(x).tickValues(integerTicks).tickFormat(d3.format("d")).tickSizeOuter(0))
       .attr("font-family", null)
       .selectAll(".tick text")
@@ -118,9 +116,10 @@
 
     svg.append("g")
       .attr("clip-path", "url(#mirla-bar-clip)")
-      .selectAll("rect")
+      .selectAll(".barchart-bar") // Explicit class selection
       .data(chartData)
       .join("rect")
+        .attr("class", "barchart-bar") // Tag the rects here
         .attr("x", x(0))
         .attr("y", d => y(d.key))
         .attr("width", d => Math.max(0, x(d.count) - x(0)))
@@ -132,7 +131,7 @@
         .on("click", (event, d) => {
           activeCategory = d.key;
           selectedItems = d.items;
-          svg.selectAll("rect")
+          svg.selectAll(".barchart-bar") // Explicit class selection
             .transition().duration(300)
             .attr("opacity", rectData => rectData.key === d.key ? 1 : 0.3);
         })
@@ -147,6 +146,7 @@
     svg.append("g").attr("class", "axis y-axis").call(yAxis);
   }
 
+  // Updated to the robust, vertically-centering wrapText logic
   function wrapText(text, width) {
     text.each(function() {
       let textNode = d3.select(this),
@@ -155,19 +155,35 @@
           line = [],
           lineNumber = 0,
           lineHeight = 1.2, 
-          y = textNode.attr("y"),
-          dy = parseFloat(textNode.attr("dy") || 0.32),
-          tspan = textNode.text(null).append("tspan").attr("x", -12).attr("y", y).attr("dy", dy + "em");
+          dy = parseFloat(textNode.attr("dy") || 0.32);
+          
+      textNode.text(null);
+      
+      let tspan = textNode.append("tspan")
+        .attr("x", -12)
+        .attr("y", 0) 
+        .attr("dy", dy + "em");
+      
       while (word = words.pop()) {
         line.push(word);
         tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
+        if (tspan.node().getComputedTextLength() > width && line.length > 1) {
           line.pop();
           tspan.text(line.join(" "));
           line = [word];
-          tspan = textNode.append("tspan").attr("x", -12).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          tspan = textNode.append("tspan")
+            .attr("x", -12)
+            .attr("y", 0) 
+            .attr("dy", `${++lineNumber * lineHeight + dy}em`)
+            .text(word);
         }
       }
+
+      const yOffset = (lineNumber * lineHeight) / 2;
+      textNode.selectAll("tspan").attr("dy", function() {
+          const currentDy = parseFloat(d3.select(this).attr("dy"));
+          return (currentDy - yOffset) + "em";
+      });
     });
   }
 
