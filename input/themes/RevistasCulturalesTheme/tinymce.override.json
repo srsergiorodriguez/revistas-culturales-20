@@ -1,4 +1,4 @@
 {
-  "extended_valid_elements": ["contributors-table[*]", "repository-gallery[*]", "repository-index[*]", "repository-barchart[*]", "repository-preview[*]", "repository-map[*]","repository-network[*]","repository-timeline[*]"],
-  "custom_elements": ["contributors-table", "repository-gallery", "repository-index", "repository-barchart", "repository-preview", "repository-map", "repository-network","repository-timeline"]
+  "extended_valid_elements": ["contributors-table[*]", "repository-gallery[*]", "repository-index[*]", "repository-barchart[*]", "repository-preview[*]", "repository-map[*]","repository-network[*]","repository-timeline[*]", "data-annotator[*]"],
+  "custom_elements": ["contributors-table", "repository-gallery", "repository-index", "repository-barchart", "repository-preview", "repository-map", "repository-network","repository-timeline", "data-annotator"]
 }

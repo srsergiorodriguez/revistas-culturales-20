@@ -5,7 +5,8 @@ repository-barchart,
 repository-preview,
 repository-map,
 repository-network,
-repository-timeline {
+repository-timeline,
+data-annotator {
   display: block;
   width: 100%;
   padding: 5px;
@@ -25,7 +26,8 @@ repository-barchart::before,
 repository-preview::before,
 repository-map::before,
 repository-network::before,
-repository-timeline::before {
+repository-timeline::before,
+data-annotator::before {
   display: block;
   color: #000000;
 }
@@ -61,4 +63,8 @@ repository-network::before {
 
 repository-timeline::before {
   content: "Repository Timeline: " attr(yKey) "";
+}
+
+data-annotator::before {
+  content: "Data Annotator";
 }
