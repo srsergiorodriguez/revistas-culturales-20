@@ -28,6 +28,8 @@
   /* Derived Backgrounds */
   --pico-card-background-color: color-mix(in srgb, var(--pico-background-color), white 4%);
   --pico-card-sectioning-background-color: color-mix(in srgb, var(--pico-background-color), white 8%);
+  --pico-form-element-background-color: color-mix(in srgb, var(--pico-background-color), white 4%);
+  --pico-muted-border-color: var(--pico-border-color);
 
   /* --- TYPOGRAPHY --- */
   --pico-font-family: 'MyBodyFont', system-ui, -apple-system, sans-serif;
