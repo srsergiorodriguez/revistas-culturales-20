@@ -4,11 +4,35 @@
     onRemove 
   } = $props();
 
-  const dataTypes = ['text', 'number', 'date', 'link', 'latlong', 'iiif'];
+  const dataTypes = ['text', 'number', 'date', 'link', 'youtube', 'latlong', 'iiif'];
 
-  function handleNameChange(index, newName) {
+  // --- Pagination Logic ---
+  let currentPage = $state(1);
+  const rowsPerPage = 10; // Adjust this number as needed
+  let previousLength = $state(schema.length);
+
+  let totalPages = $derived(Math.max(1, Math.ceil(schema.length / rowsPerPage)));
+  let paginatedSchema = $derived(schema.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage));
+
+  // Automatically go back a page if deleting the last item on the current page
+  $effect(() => {
+    // If exactly one field was added manually, jump to the new last page
+    if (schema.length === previousLength + 1) {
+      currentPage = totalPages;
+    } 
+    // If items were deleted and we are now out of bounds, snap back to the last valid page
+    else if (currentPage > totalPages) {
+      currentPage = totalPages;
+    }
+    
+    // Always update the tracker
+    previousLength = schema.length;
+  });
+
+  // Updated to mutate the field proxy directly instead of using the array index
+  function handleNameChange(field, newName) {
     const cleanName = newName.trim().replace(/\s+/g, '_').toLowerCase();
-    schema[index].name = cleanName;
+    field.name = cleanName;
   }
 </script>
 
@@ -23,7 +47,8 @@
       </tr>
     </thead>
     <tbody>
-      {#each schema as field, i (field.id)}
+      <!-- Loop now uses paginatedSchema -->
+      {#each paginatedSchema as field (field.id)}
         <tr>
           <td>
             {#if field.fixed}
@@ -32,7 +57,7 @@
               <input 
                 type="text" 
                 value={field.name} 
-                oninput={(e) => handleNameChange(i, e.target.value)}
+                oninput={(e) => handleNameChange(field, e.target.value)}
                 class="search-bar compact-input"
                 placeholder="nombre_campo"
               />
@@ -59,14 +84,7 @@
           </td>
           <td style="text-align: center;">
             {#if !field.fixed}
-              <button 
-                class="reset-btn delete-btn" 
-                aria-label="Borrar campo"
-                onclick={() => onRemove(field.id)}
-                title="Borrar"
-              >
-                ✕
-              </button>
+              <button class="reset-btn delete-btn" aria-label="Borrar campo" onclick={() => onRemove(field.id)} title="Borrar">✕</button>
             {/if}
           </td>
         </tr>
@@ -75,44 +93,22 @@
   </table>
 </div>
 
+<!-- Pagination Controls -->
+{#if totalPages > 1}
+  <div class="pagination-controls">
+    <button class="pager-btn outline" onclick={() => currentPage--} disabled={currentPage === 1}>Anterior</button>
+    <span class="page-info">Página {currentPage} de {totalPages}</span>
+    <button class="pager-btn outline" onclick={() => currentPage++} disabled={currentPage === totalPages}>Siguiente</button>
+  </div>
+{/if}
+
 <style>
-  /* This is the crucial missing line that makes the inputs look correct! */
   @import '../styles/global-styles.css';
 
-  .schema-table {
-    margin: 0;
-    font-size: 0.9rem;
-  }
-
-  /* 1. Add the robust wrapper class */
-  .table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    /* Optional: styling the scrollbar to make it look sleek */
-    scrollbar-width: thin;
-    scrollbar-color: var(--pico-muted-border-color) transparent;
-  }
-
-  /* 2. Force the table to expand rather than crush the inputs */
-  .schema-table {
-    margin: 0;
-    font-size: 0.9rem;
-    width: 100%;
-    min-width: max-content; /* This is the magic property */
-    border-collapse: collapse;
-  }
-
-  /* 3. Ensure inputs stay inside their cells */
-  .compact-input, .compact-select {
-    margin: 0 !important;
-    padding: 0.3rem 1rem !important;
-    font-size: 0.85rem !important;
-    height: auto !important;
-    width: 100% !important; /* Force to cell width */
-    min-width: 140px; /* Minimum usable size */
-    box-sizing: border-box;
-  }
-
+  .schema-table { margin: 0; font-size: 0.9rem; width: 100%; min-width: max-content; border-collapse: collapse; }
+  .table-wrapper { width: 100%; overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--pico-muted-border-color) transparent; }
+  .compact-input, .compact-select { margin: 0 !important; padding: 0.3rem 1rem !important; font-size: 0.85rem !important; height: auto !important; width: 100% !important; min-width: 140px; box-sizing: border-box; }
+  
   .fixed-badge {
     background: var(--pico-form-element-disabled-background-color);
     border: 1px solid var(--pico-muted-border-color);
@@ -125,17 +121,26 @@
     display: inline-block;
   }
 
-  .delete-btn {
-    padding: 0.2rem 0.5rem;
-    color: var(--pico-del-color, #e74c3c);
-    border-color: transparent;
-    font-weight: bold;
-    width: auto;
-  }
+  .delete-btn { padding: 0.2rem 0.5rem; color: var(--pico-del-color, #e74c3c); border-color: transparent; font-weight: bold; width: auto; }
+  .delete-btn:hover { background-color: var(--pico-del-color, #e74c3c); color: white; border-color: var(--pico-del-color, #e74c3c); }
 
-  .delete-btn:hover {
-    background-color: var(--pico-del-color, #e74c3c);
-    color: white;
-    border-color: var(--pico-del-color, #e74c3c);
+  /* Pagination Styles */
+  .pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--pico-muted-border-color);
+  }
+  .page-info {
+    font-size: 0.85rem;
+    color: var(--pico-muted-color);
+  }
+  .pager-btn {
+    width: auto;
+    padding: 0.2rem 1rem;
+    font-size: 0.85rem;
+    margin: 0;
   }
 </style>

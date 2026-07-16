@@ -316,4 +316,11 @@
 
   .btn-action { padding: 0.3rem 1rem; font-size: 0.85rem; width: auto; margin: 0; }
   .data-column { min-width: 0; }
+
+  /* Makes the viewer stick to the top of the viewport when scrolling down */
+  .preview-column {
+    position: sticky;
+    top: 2rem;
+    z-index: 5;
+  }
 </style>
