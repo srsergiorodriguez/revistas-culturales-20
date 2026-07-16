@@ -71,18 +71,30 @@
     URL.revokeObjectURL(url);
   }
 
+  // Transpiles internal IDs to Human-Readable names before downloading JSON
+  function exportMetadataJSON() {
+    const exportData = metadata.map(row => {
+      let obj = {};
+      schema.forEach(field => {
+        obj[field.name] = row[field.id] || '';
+      });
+      return obj;
+    });
+    downloadJSON(exportData, 'metadatos.json');
+  }
+
   // --- CSV Export Logic ---
   function downloadCSV(filename) {
     if (metadata.length === 0) return;
     
-    // Use schema IDs as headers to guarantee data structure integrity
-    const keys = schema.map(f => f.id);
-    let csvContent = keys.join(',') + '\n';
+    // 1. Use human-readable names for the headers
+    const headers = schema.map(f => f.name);
+    let csvContent = headers.join(',') + '\n';
 
     metadata.forEach(row => {
-      let rowValues = keys.map(k => {
-        let val = row[k] === undefined || row[k] === null ? '' : String(row[k]);
-        // Safely escape quotes and wrap fields containing commas or newlines
+      // 2. Fetch the data using the internal IDs
+      let rowValues = schema.map(field => {
+        let val = row[field.id] === undefined || row[field.id] === null ? '' : String(row[field.id]);
         if (val.includes(',') || val.includes('"') || val.includes('\n')) {
           val = '"' + val.replace(/"/g, '""') + '"';
         }
@@ -91,7 +103,6 @@
       csvContent += rowValues.join(',') + '\n';
     });
 
-    // Add BOM so Excel opens UTF-8 special characters correctly
     const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -108,20 +119,19 @@
     let curVal = "";
     let inQuotes = false;
     
-    // Character-by-character parsing to safely handle newlines and commas inside quotes
     for (let i = 0; i < text.length; i++) {
       const c = text[i];
       const nextC = text[i+1];
       
       if (c === '"' && inQuotes && nextC === '"') {
-        curVal += '"'; i++; // Skip escaped quote
+        curVal += '"'; i++; 
       } else if (c === '"') {
         inQuotes = !inQuotes;
       } else if (c === ',' && !inQuotes) {
         curRow.push(curVal);
         curVal = "";
       } else if ((c === '\n' || c === '\r') && !inQuotes) {
-        if (c === '\r' && nextC === '\n') i++; // Handle Windows CRLF
+        if (c === '\r' && nextC === '\n') i++; 
         curRow.push(curVal);
         rows.push(curRow);
         curRow = [];
@@ -131,7 +141,6 @@
       }
     }
     
-    // Push the very last value/row if the file doesn't end with a newline
     if (curVal !== "" || curRow.length > 0) {
       curRow.push(curVal);
       rows.push(curRow);
@@ -144,7 +153,11 @@
     const newMetadata = cleanRows.slice(1).map(row => {
       let obj = { id: generateId('m') };
       headers.forEach((h, idx) => {
-        if (h) obj[h.trim()] = row[idx] || '';
+        if (h) {
+          // 3. Find the internal ID using the human-readable header name
+          const field = schema.find(f => f.name === h.trim());
+          if (field) obj[field.id] = row[idx] || '';
+        }
       });
       return obj;
     });
@@ -166,9 +179,19 @@
         } else {
           // Standard JSON parsing
           const parsed = JSON.parse(content);
-          if (type === 'schema') schema = parsed;
-          else if (type === 'metadata') metadata = parsed;
-          else if (type === 'project') {
+          if (type === 'schema') {
+            schema = parsed;
+          } else if (type === 'metadata') {
+            // Transpile human-readable JSON keys back to internal schema IDs
+            metadata = parsed.map(row => {
+              let obj = { id: generateId('m') };
+              for (const [key, value] of Object.entries(row)) {
+                const field = schema.find(f => f.name === key);
+                if (field) obj[field.id] = value;
+              }
+              return obj;
+            });
+          } else if (type === 'project') {
             if (parsed.schema) schema = parsed.schema;
             if (parsed.metadata) metadata = parsed.metadata;
           }
@@ -212,7 +235,7 @@
         <li><hr /></li>
         <!-- Grouped metadata interactions logically -->
         <li><button class="dropdown-btn" onclick={() => fileInputMetadata.click()}>Cargar Metadatos (JSON/CSV)</button></li>
-        <li><button class="dropdown-btn" onclick={() => downloadJSON(metadata, 'metadatos.json')}>Guardar Metadatos (JSON)</button></li>
+        <li><button class="dropdown-btn" onclick={exportMetadataJSON}>Guardar Metadatos (JSON)</button></li>
         <li><button class="dropdown-btn" onclick={() => downloadCSV('metadatos.csv')}>Guardar Metadatos (CSV)</button></li>
         <li><hr /></li>
         <li><button class="dropdown-btn" onclick={loadDefaultSchema}>Esquema por Defecto</button></li>
@@ -290,6 +313,10 @@
     box-shadow: none;
     cursor: pointer; 
     transition: color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .menu-btn {
+    cursor: pointer;
   }
   
   .dropdown-btn:hover,

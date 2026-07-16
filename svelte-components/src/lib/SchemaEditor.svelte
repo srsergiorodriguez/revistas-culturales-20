@@ -31,8 +31,7 @@
 
   // Updated to mutate the field proxy directly instead of using the array index
   function handleNameChange(field, newName) {
-    const cleanName = newName.trim().replace(/\s+/g, '_').toLowerCase();
-    field.name = cleanName;
+    field.name = newName;
   }
 </script>
 
@@ -96,9 +95,9 @@
 <!-- Pagination Controls -->
 {#if totalPages > 1}
   <div class="pagination-controls">
-    <button class="pager-btn outline" onclick={() => currentPage--} disabled={currentPage === 1}>Anterior</button>
+    <button class="pager-btn outline" onclick={() => currentPage--} disabled={currentPage === 1}>«</button>
     <span class="page-info">Página {currentPage} de {totalPages}</span>
-    <button class="pager-btn outline" onclick={() => currentPage++} disabled={currentPage === totalPages}>Siguiente</button>
+    <button class="pager-btn outline" onclick={() => currentPage++} disabled={currentPage === totalPages}>»</button>
   </div>
 {/if}
 
