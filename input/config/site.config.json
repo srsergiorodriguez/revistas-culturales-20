@@ -8,7 +8,7 @@
         "color": 1,
         "icon": "web-shirt"
     },
-    "domain": "https://srsergiorodriguez.github.io/revistas-culturales-20",
+    "domain": "https://u-030-s032.v268.uni-tuebingen.de",
     "language": "es",
     "spellchecking": false,
     "advanced": {
@@ -173,15 +173,15 @@
         }
     },
     "deployment": {
-        "protocol": "github-pages",
+        "protocol": "sftp",
         "relativeUrls": false,
-        "port": "",
-        "server": "",
-        "username": "",
-        "password": "",
+        "port": "22222",
+        "server": "134.2.30.32",
+        "username": "nrsinf8",
+        "password": "publii uuid-1781019287794-782869424",
         "askforpassword": false,
         "rejectUnauthorized": true,
-        "path": "",
+        "path": "/html/",
         "passphrase": "",
         "sftpkey": "",
         "s3": {
@@ -212,7 +212,7 @@
             "user": "srsergiorodriguez",
             "repo": "revistas-culturales-20",
             "branch": "gh-pages",
-            "token": "publii-gh-token uuid-1781019287794-782869424",
+            "token": "",
             "parallelOperations": 1,
             "apiRateLimiting": 1
         },
@@ -238,5 +238,5 @@
         }
     },
     "theme": "RevistasCulturalesTheme",
-    "syncDate": 1784237510504
+    "syncDate": 1789063900236
 }

@@ -207,22 +207,10 @@
   function loadDefaultSchema() {
     schema = [
       { id: 'p_id', name: 'id', type: 'text', desc: 'Identificador único', fixed: true },
-      { id: generateId('p'), name: 'titulo', type: 'text', desc: 'Título del artículo (dcterms:title)', fixed: false },
-      { id: generateId('p'), name: 'numero_fasciculo', type: 'text', desc: 'Número del fascículo (schema:issueNumber)', fixed: false },
-      { id: generateId('p'), name: 'fecha', type: 'date', desc: 'Fecha de publicación (dcterms:date)', fixed: false },
-      { id: generateId('p'), name: 'editor', type: 'text', desc: 'Editor de la revista (schema:editor)', fixed: false },
-      { id: generateId('p'), name: 'editorial', type: 'text', desc: 'Editorial (schema:publisher)', fixed: false },
-      { id: generateId('p'), name: 'autor', type: 'text', desc: 'Autor del artículo (dcterms:creator)', fixed: false },
-      { id: generateId('p'), name: 'seudonimo', type: 'text', desc: 'Seudónimo (skos:altLabel)', fixed: false },
-      { id: generateId('p'), name: 'idioma', type: 'text', desc: 'Idioma (schema:inLanguage)', fixed: false },
-      { id: generateId('p'), name: 'idioma_original', type: 'text', desc: 'Idioma original (dcterms:language)', fixed: false },
-      { id: generateId('p'), name: 'paginacion', type: 'text', desc: 'Paginación (bf:extent)', fixed: false },
-      { id: generateId('p'), name: 'colaborador', type: 'text', desc: 'Traductor u otro colaborador (dcterms:contributor)', fixed: false },
-      { id: generateId('p'), name: 'rol', type: 'text', desc: 'Rol del colaborador (bf:role)', fixed: false },
-      { id: generateId('p'), name: 'obra_original', type: 'text', desc: 'Obra original (bf:translationOf)', fixed: false },
-      { id: generateId('p'), name: 'genero', type: 'text', desc: 'Género (bf:genreForm)', fixed: false },
-      { id: generateId('p'), name: 'tipo_recurso', type: 'text', desc: 'Tipo de recurso (dcterms:type)', fixed: false },
-      { id: generateId('p'), name: 'manifiesto_iiif', type: 'iiif', desc: 'URL del manifiesto IIIF para visor', fixed: false }
+      { id: generateId('p'), name: 'nombre', type: 'text', desc: 'Nombre del objeto', fixed: false },
+      { id: generateId('p'), name: 'fecha', type: 'date', desc: 'Fecha de creación', fixed: false },
+      { id: generateId('p'), name: 'descripción', type: 'text', desc: 'Descripción detallada', fixed: false },
+      { id: generateId('p'), name: 'url', type: 'link', desc: 'URL de referencia', fixed: false }
     ];
   }
 </script>
