@@ -341,7 +341,9 @@
             }
         }
     },
-    "pageTemplates": {},
+    "pageTemplates": {
+        "annotator": "Annotator"
+    },
     "postTemplates": {},
     "extensions": {
         "postEditorConfigOverride": true,

@@ -5,12 +5,65 @@
   import MetadataEditor from '$lib/MetadataEditor.svelte';
   import IiifViewer from '$lib/IiifViewer.svelte';
 
-  let schema = $state([
-    { id: 'p_id', name: 'id', type: 'text', desc: 'Identificador único', fixed: true }
-  ]);
-  
+  const generateId = (prefix) => prefix + '_' + Math.random().toString(36).substr(2, 9);
+
+  function getDefaultSchema() {
+    return [
+      { id: 'p_id', name: 'id', type: 'text', desc: 'Identificador único', fixed: true },
+      { id: generateId('p'), name: 'titulo', type: 'text', desc: 'Título del artículo (dcterms:title)', fixed: false },
+      { id: generateId('p'), name: 'numero_fasciculo', type: 'text', desc: 'Número del fascículo (schema:issueNumber)', fixed: false },
+      { id: generateId('p'), name: 'publicacion', type: 'text', desc: 'Publicación o revista', fixed: false },
+      { id: generateId('p'), name: 'fecha', type: 'date', desc: 'Fecha de publicación (dcterms:date)', fixed: false },
+      { id: generateId('p'), name: 'editor', type: 'text', desc: 'Editor de la revista (schema:editor)', fixed: false },
+      { id: generateId('p'), name: 'editorial', type: 'text', desc: 'Editorial (schema:publisher)', fixed: false },
+      { id: generateId('p'), name: 'autor', type: 'text', desc: 'Autor del artículo (dcterms:creator)', fixed: false },
+      { id: generateId('p'), name: 'seudonimo', type: 'text', desc: 'Seudónimo (skos:altLabel)', fixed: false },
+      { id: generateId('p'), name: 'idioma', type: 'text', desc: 'Idioma (schema:inLanguage)', fixed: false },
+      { id: generateId('p'), name: 'idioma_original', type: 'text', desc: 'Idioma original (dcterms:language)', fixed: false },
+      { id: generateId('p'), name: 'paginacion', type: 'text', desc: 'Paginación (bf:extent)', fixed: false },
+      { id: generateId('p'), name: 'colaborador', type: 'text', desc: 'Traductor u otro colaborador (dcterms:contributor)', fixed: false },
+      { id: generateId('p'), name: 'rol', type: 'text', desc: 'Rol del colaborador (bf:role)', fixed: false },
+      { id: generateId('p'), name: 'obra_original', type: 'text', desc: 'Obra original (bf:translationOf)', fixed: false },
+      { id: generateId('p'), name: 'genero', type: 'text', desc: 'Género (bf:genreForm)', fixed: false },
+      { id: generateId('p'), name: 'tipo_recurso', type: 'text', desc: 'Tipo de recurso (dcterms:type)', fixed: false },
+      { id: generateId('p'), name: 'manifiesto_iiif', type: 'iiif', desc: 'URL del manifiesto IIIF para visor', fixed: false }
+    ];
+  }
+
+  let schema = $state(getDefaultSchema());
   let metadata = $state([]);
   let activeRowId = $state(null);
+
+  // --- Lógica del borde arrastrable (Resizer) ---
+  let leftWidth = $state(60); 
+  let isDragging = $state(false);
+  let gridContainer; // Variable para enlazar el DOM internamente y saltarse el Shadow DOM
+
+  function startDrag(e) {
+    e.preventDefault();
+    isDragging = true;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  }
+
+  function onDrag(e) {
+    if (!isDragging || !gridContainer) return; // Se usa la variable local en vez de querySelector
+    
+    const rect = gridContainer.getBoundingClientRect();
+    const newWidth = ((e.clientX - rect.left) / rect.width) * 100;
+    
+    if (newWidth > 20 && newWidth < 80) {
+      leftWidth = newWidth;
+    }
+  }
+
+  function stopDrag() {
+    if (isDragging) {
+      isDragging = false;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    }
+  }
 
   let fileInputSchema;
   let fileInputMetadata;
@@ -23,8 +76,6 @@
     const row = metadata.find(r => r.id === activeRowId);
     return row ? row[iiifFieldId] || "" : "";
   });
-
-  const generateId = (prefix) => prefix + '_' + Math.random().toString(36).substr(2, 9);
 
   function addSchemaField() {
     schema.push({ 
@@ -60,6 +111,14 @@
     activeRowId = newRow.id; 
   }
 
+  function clearAll() {
+    if (confirm("¿Estás seguro de que deseas borrar todo el esquema y los datos actuales?")) {
+      schema = [{ id: 'p_id', name: 'id', type: 'text', desc: 'Identificador único', fixed: true }];
+      metadata = [];
+      activeRowId = null;
+    }
+  }
+
   // --- JSON File Management ---
   function downloadJSON(data, filename) {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -71,7 +130,6 @@
     URL.revokeObjectURL(url);
   }
 
-  // Transpiles internal IDs to Human-Readable names before downloading JSON
   function exportMetadataJSON() {
     const exportData = metadata.map(row => {
       let obj = {};
@@ -86,13 +144,10 @@
   // --- CSV Export Logic ---
   function downloadCSV(filename) {
     if (metadata.length === 0) return;
-    
-    // 1. Use human-readable names for the headers
     const headers = schema.map(f => f.name);
     let csvContent = headers.join(',') + '\n';
 
     metadata.forEach(row => {
-      // 2. Fetch the data using the internal IDs
       let rowValues = schema.map(field => {
         let val = row[field.id] === undefined || row[field.id] === null ? '' : String(row[field.id]);
         if (val.includes(',') || val.includes('"') || val.includes('\n')) {
@@ -140,12 +195,10 @@
         curVal += c;
       }
     }
-    
     if (curVal !== "" || curRow.length > 0) {
       curRow.push(curVal);
       rows.push(curRow);
     }
-
     const cleanRows = rows.filter(r => r.length > 1 || r[0] !== "");
     if (cleanRows.length < 2) return;
 
@@ -154,14 +207,12 @@
       let obj = { id: generateId('m') };
       headers.forEach((h, idx) => {
         if (h) {
-          // 3. Find the internal ID using the human-readable header name
           const field = schema.find(f => f.name === h.trim());
           if (field) obj[field.id] = row[idx] || '';
         }
       });
       return obj;
     });
-    
     metadata = newMetadata;
   }
 
@@ -173,16 +224,13 @@
     reader.onload = (e) => {
       const content = e.target.result;
       try {
-        // Route CSV files to the custom parser
         if (file.name.toLowerCase().endsWith('.csv') && type === 'metadata') {
           importCSV(content);
         } else {
-          // Standard JSON parsing
           const parsed = JSON.parse(content);
           if (type === 'schema') {
             schema = parsed;
           } else if (type === 'metadata') {
-            // Transpile human-readable JSON keys back to internal schema IDs
             metadata = parsed.map(row => {
               let obj = { id: generateId('m') };
               for (const [key, value] of Object.entries(row)) {
@@ -205,29 +253,12 @@
   }
 
   function loadDefaultSchema() {
-    schema = [
-      { id: 'p_id', name: 'id', type: 'text', desc: 'Identificador único', fixed: true },
-      { id: generateId('p'), name: 'titulo', type: 'text', desc: 'Título del artículo (dcterms:title)', fixed: false },
-      { id: generateId('p'), name: 'numero_fasciculo', type: 'text', desc: 'Número del fascículo (schema:issueNumber)', fixed: false },
-      { id: generateId('p'), name: 'fecha', type: 'date', desc: 'Fecha de publicación (dcterms:date)', fixed: false },
-      { id: generateId('p'), name: 'editor', type: 'text', desc: 'Editor de la revista (schema:editor)', fixed: false },
-      { id: generateId('p'), name: 'editorial', type: 'text', desc: 'Editorial (schema:publisher)', fixed: false },
-      { id: generateId('p'), name: 'autor', type: 'text', desc: 'Autor del artículo (dcterms:creator)', fixed: false },
-      { id: generateId('p'), name: 'seudonimo', type: 'text', desc: 'Seudónimo (skos:altLabel)', fixed: false },
-      { id: generateId('p'), name: 'idioma', type: 'text', desc: 'Idioma (schema:inLanguage)', fixed: false },
-      { id: generateId('p'), name: 'idioma_original', type: 'text', desc: 'Idioma original (dcterms:language)', fixed: false },
-      { id: generateId('p'), name: 'paginacion', type: 'text', desc: 'Paginación (bf:extent)', fixed: false },
-      { id: generateId('p'), name: 'colaborador', type: 'text', desc: 'Traductor u otro colaborador (dcterms:contributor)', fixed: false },
-      { id: generateId('p'), name: 'rol', type: 'text', desc: 'Rol del colaborador (bf:role)', fixed: false },
-      { id: generateId('p'), name: 'obra_original', type: 'text', desc: 'Obra original (bf:translationOf)', fixed: false },
-      { id: generateId('p'), name: 'genero', type: 'text', desc: 'Género (bf:genreForm)', fixed: false },
-      { id: generateId('p'), name: 'tipo_recurso', type: 'text', desc: 'Tipo de recurso (dcterms:type)', fixed: false },
-      { id: generateId('p'), name: 'manifiesto_iiif', type: 'iiif', desc: 'URL del manifiesto IIIF para visor', fixed: false }
-    ];
+    schema = getDefaultSchema();
   }
 </script>
 
-<!-- Hidden inputs for file dialogues (Updated metadata to accept both formats) -->
+<svelte:window onmousemove={onDrag} onmouseup={stopDrag} />
+
 <input type="file" bind:this={fileInputProject} accept=".json" style="display: none;" onchange={(e) => handleFileUpload(e, 'project')} />
 <input type="file" bind:this={fileInputSchema} accept=".json" style="display: none;" onchange={(e) => handleFileUpload(e, 'schema')} />
 <input type="file" bind:this={fileInputMetadata} accept=".json,.csv" style="display: none;" onchange={(e) => handleFileUpload(e, 'metadata')} />
@@ -245,17 +276,18 @@
         <li><button class="dropdown-btn" onclick={() => fileInputSchema.click()}>Cargar Esquema</button></li>
         <li><button class="dropdown-btn" onclick={() => downloadJSON(schema, 'esquema.json')}>Guardar Esquema</button></li>
         <li><hr /></li>
-        <!-- Grouped metadata interactions logically -->
         <li><button class="dropdown-btn" onclick={() => fileInputMetadata.click()}>Cargar Metadatos (JSON/CSV)</button></li>
         <li><button class="dropdown-btn" onclick={exportMetadataJSON}>Guardar Metadatos (JSON)</button></li>
         <li><button class="dropdown-btn" onclick={() => downloadCSV('metadatos.csv')}>Guardar Metadatos (CSV)</button></li>
         <li><hr /></li>
         <li><button class="dropdown-btn" onclick={loadDefaultSchema}>Esquema por Defecto</button></li>
+        <li><button class="dropdown-btn" onclick={clearAll}>Borrar todo (En blanco)</button></li>
       </ul>
     </details>
   </div>
 
-  <div class="annotator-grid {iiifFieldId ? 'has-iiif' : ''}">
+  <div bind:this={gridContainer} class="annotator-grid {iiifFieldId ? 'has-iiif' : ''}" 
+       style={iiifFieldId ? `grid-template-columns: ${leftWidth}fr 12px ${100 - leftWidth}fr;` : ''}>
     
     <div class="data-column">
       <div class="controls-container">
@@ -266,7 +298,7 @@
         <SchemaEditor bind:schema={schema} onRemove={removeSchemaField} />
       </div>
 
-      <div class="controls-container">
+      <div class="controls-container" style="margin-top: 0.75rem;">
         <div class="section-header">
           <h3 style="margin: 0;">Anotaciones</h3>
           <button class="pager-btn outline btn-action" onclick={addMetadataRow}>+ Añadir Fila</button>
@@ -276,6 +308,11 @@
     </div>
 
     {#if iiifFieldId}
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <div class="resizer" onmousedown={startDrag} title="Arrastrar para redimensionar">
+        <div class="resizer-handle"></div>
+      </div>
+
       <div class="preview-column controls-container">
         <div class="section-header">
           <h3 style="margin: 0;">Visor de Documento</h3>
@@ -294,22 +331,20 @@
   .menu-bar {
     display: flex;
     justify-content: flex-start;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
 
-  .file-menu {
-    margin: 0;
+  .file-menu { margin: 0; }
+  
+  /* Asegura que el summary tenga el cursor interactivo */
+  .file-menu summary { 
+    margin-bottom: 0; 
+    padding: 0.4rem 1rem; 
+    cursor: pointer !important;
   }
-  .file-menu summary {
-    margin-bottom: 0;
-    padding: 0.4rem 1rem;
-  }
-  .file-menu ul {
-    min-width: 250px; /* Widened slightly to accommodate the new JSON/CSV labels */
-  }
-  .file-menu hr {
-    margin: 0.5rem 0;
-  }
+  
+  .file-menu ul { min-width: 260px; }
+  .file-menu hr { margin: 0.5rem 0; }
 
   .dropdown-btn {
     width: 100%;
@@ -327,10 +362,6 @@
     transition: color 0.2s ease, background-color 0.2s ease;
   }
 
-  .menu-btn {
-    cursor: pointer;
-  }
-  
   .dropdown-btn:hover,
   .dropdown-btn:focus,
   .menu-btn:hover,
@@ -342,11 +373,7 @@
     box-shadow: none;
   }
 
-  .annotator-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; transition: all 0.3s ease; }
-  
-  @media (min-width: 992px) {
-    .annotator-grid.has-iiif { grid-template-columns: 3fr 2fr; align-items: start; }
-  }
+  .annotator-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; transition: none; align-items: start; }
 
   .section-header {
     display: flex; justify-content: space-between; align-items: center;
@@ -356,7 +383,32 @@
   .btn-action { padding: 0.3rem 1rem; font-size: 0.85rem; width: auto; margin: 0; }
   .data-column { min-width: 0; }
 
-  /* Makes the viewer stick to the top of the viewport when scrolling down */
+  .resizer {
+    width: 12px;
+    height: 100vh;
+    position: sticky;
+    top: 2rem;
+    cursor: col-resize;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border-radius: 4px;
+    transition: background 0.2s;
+    user-select: none;
+  }
+
+  .resizer:hover, .resizer:active {
+    background: var(--pico-muted-border-color);
+  }
+
+  .resizer-handle {
+    width: 4px;
+    height: 40px;
+    background: var(--pico-muted-color);
+    border-radius: 2px;
+  }
+
   .preview-column {
     position: sticky;
     top: 2rem;

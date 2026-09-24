@@ -178,7 +178,15 @@
   .iiif-container {
     position: relative;
     width: 100%;
-    height: 500px; 
+    
+    /* Altura dinámica: ocupa el 100% de la ventana restando unos 12rem (aprox 192px) 
+       para dejar espacio al sticky header y los márgenes superiores */
+    height: calc(100vh - 12rem); 
+    
+    /* Topes de seguridad */
+    min-height: 500px; /* Evita que se aplaste en laptops pequeñas */
+    max-height: 850px; /* Límite prudencial para monitores muy altos */
+    
     border: 1px solid var(--pico-muted-border-color, #ccc);
     border-radius: var(--pico-border-radius, 8px);
     overflow: hidden;

@@ -9,8 +9,20 @@
 
   const allItems = window.REPOSITORIES_DATA || [];
   
-  let filterKeys = $derived(
-    filters ? filters.split(',').map(s => s.trim().toLowerCase()) : []
+  let filterConfigs = $derived(
+    filters ? filters.split(',').map(s => {
+      const label = s.trim();
+      const key = label.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      return { label, key };
+    }) : []
+  );
+
+  let displayConfigs = $derived(
+    modalFields ? modalFields.split(',').map(s => {
+      const label = s.trim();
+      const key = label.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      return { label, key };
+    }) : []
   );
 
   let displayFields = $derived(
@@ -123,7 +135,7 @@
   function clearAll() {
     searchQuery = "";
     let resetFilters = {};
-    filterKeys.forEach(key => resetFilters[key] = "");
+    filterConfigs.forEach(conf => resetFilters[conf.key] = "");
     activeFilters = resetFilters;
   }
 
@@ -162,14 +174,14 @@
       />
     </div>
 
-    {#if filterKeys.length > 0}
+    {#if filterConfigs.length > 0}
       <div class="filters-grid">
-        {#each filterKeys as key}
+        {#each filterConfigs as config}
           <div class="filter-group">
-            <label for="filter-{key.replace(/\s+/g, '-')}">{key.replace(/_/g, ' ')}</label>
-            <select id="filter-{key.replace(/\s+/g, '-')}" class="filter-select" bind:value={activeFilters[key]}>
+            <label for="filter-{config.key}">{config.label.replace(/_/g, ' ')}</label>
+            <select id="filter-{config.key}" class="filter-select" bind:value={activeFilters[config.key]}>
               <option value="">- {i18n.all} -</option>
-              {#each getUniqueOptions(key) as option}
+              {#each getUniqueOptions(config.key) as option}
                 <option value={option}>{option}</option>
               {/each}
             </select>
@@ -265,15 +277,15 @@
             </a>
           </div>
 
-          {#if displayFields.length > 0}
+          {#if displayConfigs.length > 0}
             <div class="modal-metadata">
               <table class="striped">
                 <tbody>
-                  {#each displayFields as field}
-                    {#if activeModalItem[field]}
+                  {#each displayConfigs as config}
+                    {#if activeModalItem[config.key]}
                       <tr>
-                        <th scope="row">{field.replace(/_/g, ' ')}</th>
-                        <td>{formatFieldValue(activeModalItem[field])}</td>
+                        <th scope="row">{config.label.replace(/_/g, ' ')}</th>
+                        <td>{formatFieldValue(activeModalItem[config.key])}</td>
                       </tr>
                     {/if}
                   {/each}
