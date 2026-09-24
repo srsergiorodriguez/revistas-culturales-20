@@ -270,18 +270,18 @@
       <!-- svelte-ignore a11y_no_redundant_roles -->
       <summary role="button" class="outline secondary menu-btn">Menú</summary>
       <ul dir="rtl">
-        <li><button class="dropdown-btn" onclick={() => fileInputProject.click()}>Abrir Proyecto</button></li>
-        <li><button class="dropdown-btn" onclick={() => downloadJSON({ schema, metadata }, 'proyecto_completo.json')}>Guardar Proyecto</button></li>
+        <li><button class="dropdown-btn" onclick={() => fileInputProject.click()}>Abrir proyecto</button></li>
+        <li><button class="dropdown-btn" onclick={() => downloadJSON({ schema, metadata }, 'proyecto_completo.json')}>Guardar proyecto</button></li>
         <li><hr /></li>
-        <li><button class="dropdown-btn" onclick={() => fileInputSchema.click()}>Cargar Esquema</button></li>
-        <li><button class="dropdown-btn" onclick={() => downloadJSON(schema, 'esquema.json')}>Guardar Esquema</button></li>
+        <li><button class="dropdown-btn" onclick={() => fileInputSchema.click()}>Cargar esquema</button></li>
+        <li><button class="dropdown-btn" onclick={() => downloadJSON(schema, 'esquema.json')}>Guardar esquema</button></li>
         <li><hr /></li>
-        <li><button class="dropdown-btn" onclick={() => fileInputMetadata.click()}>Cargar Metadatos (JSON/CSV)</button></li>
-        <li><button class="dropdown-btn" onclick={exportMetadataJSON}>Guardar Metadatos (JSON)</button></li>
-        <li><button class="dropdown-btn" onclick={() => downloadCSV('metadatos.csv')}>Guardar Metadatos (CSV)</button></li>
+        <li><button class="dropdown-btn" onclick={() => fileInputMetadata.click()}>Cargar metadatos (JSON/CSV)</button></li>
+        <li><button class="dropdown-btn" onclick={exportMetadataJSON}>Guardar metadatos (JSON)</button></li>
+        <li><button class="dropdown-btn" onclick={() => downloadCSV('metadatos.csv')}>Guardar metadatos (CSV)</button></li>
         <li><hr /></li>
-        <li><button class="dropdown-btn" onclick={loadDefaultSchema}>Esquema por Defecto</button></li>
-        <li><button class="dropdown-btn" onclick={clearAll}>Borrar todo (En blanco)</button></li>
+        <li><button class="dropdown-btn" onclick={loadDefaultSchema}>Esquema por defecto</button></li>
+        <li><button class="dropdown-btn" onclick={clearAll}>Proyecto en blanco</button></li>
       </ul>
     </details>
   </div>
@@ -292,8 +292,8 @@
     <div class="data-column">
       <div class="controls-container">
         <div class="section-header">
-          <h3 style="margin: 0;">Esquema de Datos</h3>
-          <button class="pager-btn outline btn-action" onclick={addSchemaField}>+ Añadir Campo</button>
+          <h3 style="margin: 0;">Esquema de datos</h3>
+          <button class="pager-btn outline btn-action" onclick={addSchemaField}>+ Añadir campo</button>
         </div>
         <SchemaEditor bind:schema={schema} onRemove={removeSchemaField} />
       </div>
@@ -301,7 +301,7 @@
       <div class="controls-container" style="margin-top: 0.75rem;">
         <div class="section-header">
           <h3 style="margin: 0;">Anotaciones</h3>
-          <button class="pager-btn outline btn-action" onclick={addMetadataRow}>+ Añadir Fila</button>
+          <button class="pager-btn outline btn-action" onclick={addMetadataRow}>+ Añadir fila</button>
         </div>
         <MetadataEditor {schema} bind:metadata={metadata} bind:activeRowId={activeRowId} />
       </div>
@@ -315,7 +315,7 @@
 
       <div class="preview-column controls-container">
         <div class="section-header">
-          <h3 style="margin: 0;">Visor de Documento</h3>
+          <h3 style="margin: 0;">Visor de documento</h3>
           <span style="font-size: 0.75rem; color: var(--pico-muted-color);">IIIF Manifest</span>
         </div>
         <IiifViewer manifestUrl={currentManifestUrl} />
