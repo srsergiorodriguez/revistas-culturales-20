@@ -7,12 +7,12 @@
     {
         "path": "acerca.html",
         "type": "file",
-        "md5": "5315eb61ef22e35fc79fcd265139bc91"
+        "md5": "3e0ec566dc0e1b694d423b77fc6794cd"
     },
     {
         "path": "anotador-de-objetos.html",
         "type": "file",
-        "md5": "ab0be1ed4efc4f9a5c52e337891f87d3"
+        "md5": "6350fb8dfe6b04e3d8fc24c8b48fc696"
     },
     {
         "path": "assets",
@@ -82,7 +82,7 @@
     {
         "path": "/assets/js/custom-components.js",
         "type": "file",
-        "md5": "e0aa34f866bd198e4c92ca4c263ef4cd"
+        "md5": "2f5e9407b4d5fa2cf7284a74ef3a82f7"
     },
     {
         "path": "assets/js/osd_icons",
@@ -312,7 +312,7 @@
     {
         "path": "creditos.html",
         "type": "file",
-        "md5": "eb39c02c92e53cc3cbb6a87be80a6b71"
+        "md5": "e626831f4ee1b4db4648083163df4e60"
     },
     {
         "path": "cultural-magazines-from-modernismo-to-avant-garde-processes-of-modernization-and-transnational-networks.html",
@@ -322,7 +322,7 @@
     {
         "path": "explorador-de-colecciones.html",
         "type": "file",
-        "md5": "4b7f56e1570c8b926718ebb25628c82f"
+        "md5": "9f064fcccc706aea5799f5d25a7acc7d"
     },
     {
         "path": "feed.json",
@@ -352,7 +352,7 @@
     {
         "path": "index.html",
         "type": "file",
-        "md5": "7e21011a59ed1a168360394530ed012e"
+        "md5": "a46f7ac971363c7b3530b38899840460"
     },
     {
         "path": "judith-rideout-voices-from-a-lost-world-when-rare-oriental-texts-are-dusted-off-in-a-spanish-bazaar.html",
@@ -1722,12 +1722,12 @@
     {
         "path": "publicaciones.html",
         "type": "file",
-        "md5": "0331c5548dc031ca1a38b4f91925f74b"
+        "md5": "d19a9ef19c353d3065e8c8cfd6b82108"
     },
     {
         "path": "red-de-participantes.html",
         "type": "file",
-        "md5": "122815f73ac17f1bc94a4ec97962324e"
+        "md5": "4a24c033b9c13413dd4ee95cc73769b9"
     },
     {
         "path": "robots.txt",
