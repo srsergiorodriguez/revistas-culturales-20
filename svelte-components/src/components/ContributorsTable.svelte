@@ -3,18 +3,23 @@
 <script>
   import { onMount } from 'svelte';
 
+  // Propiedad para definir qué base de datos cargar ('principales' o 'asociados')
+  let { type = 'principales' } = $props();
+
   let contributors = $state([]);
   let status = $state('loading');
   let errorMessage = $state('');
 
   onMount(() => {
-    // Lee la variable global inyectada por el plugin
-    if (window.CONTRIBUTORS_DATA) {
-      contributors = window.CONTRIBUTORS_DATA;
+    // Selecciona la variable global dependiendo del prop 'type'
+    const data = type === 'asociados' ? window.ASOCIADOS_DATA : window.PRINCIPALES_DATA;
+
+    if (data) {
+      contributors = data;
       status = 'success';
     } else {
       status = 'error';
-      errorMessage = "No se encontraron los datos. Asegúrate de que el CSV esté subido y el archivo JS enlazado.";
+      errorMessage = `No se encontraron los datos. Asegúrese de que el archivo participantes_${type}.csv esté subido.`;
     }
   });
 </script>
@@ -33,26 +38,27 @@
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Biografía</th>
-          <th>Correo</th>
+          <th>Bio</th>
+          <th>Contacto</th>
         </tr>
       </thead>
       <tbody>
         {#each contributors as person}
           <tr>
             <td>
-              {#if person.url && person.url.trim() !== ''}
-                <a href="https://orcid.org/{person.url.trim()}" target="_blank" rel="noopener noreferrer">
-                  {person.name || 'Sin nombre'}
+              <!-- Se reemplazó person.url por person.orcid -->
+              {#if person.orcid && person.orcid.trim() !== ''}
+                <a href="https://orcid.org/{person.orcid.trim()}" target="_blank" rel="noopener noreferrer">
+                  {person.nombre || 'Sin nombre'}
                 </a>
               {:else}
-                {person.name || 'Sin nombre'}
+                {person.nombre || 'Sin nombre'}
               {/if}
             </td>
             <td>{person.bio || ''}</td>
             <td>
               <!-- Se imprime como texto plano para evitar recolección de bots -->
-              {person.email || ''}
+              {person.contacto || ''}
             </td>
           </tr>
         {/each}
@@ -77,14 +83,13 @@
   }
 
   th, td {
-    padding: 1rem; /* Aumenta el margen interno para que respire */
+    padding: 1rem; 
     border: none;
     border-bottom: 1px solid var(--mirla-border, #ccc);
     text-align: left;
     vertical-align: top;
   }
 
-  /* Redondea las esquinas superiores de los encabezados */
   tr:first-child th:first-child {
     border-top-left-radius: var(--pico-border-radius, 8px);
   }
@@ -92,7 +97,6 @@
     border-top-right-radius: var(--pico-border-radius, 8px);
   }
 
-  /* Elimina el borde inferior de la última fila para que no choque con el borde de la tabla */
   tbody tr:last-child td {
     border-bottom: none;
   }
@@ -102,7 +106,6 @@
     font-weight: 600;
   }
 
-  /* Si desea que la fila completa tenga un efecto sutil al pasar el mouse */
   tbody tr {
     transition: background-color 0.2s ease;
   }

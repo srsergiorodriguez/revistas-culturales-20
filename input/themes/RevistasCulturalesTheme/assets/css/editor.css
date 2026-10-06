@@ -34,7 +34,7 @@ data-annotator::before {
 
 /* --- SPECIFIC COMPONENT LABELS --- */
 contributors-table::before {
-  content: "Contributors table: " attr(src) "";
+  content: "Contributors table: " attr(type) "";
 }
 
 repository-gallery::before {

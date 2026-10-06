@@ -7,12 +7,12 @@
     {
         "path": "acerca.html",
         "type": "file",
-        "md5": "3e0ec566dc0e1b694d423b77fc6794cd"
+        "md5": "86d85ffee0ea0b581c26b8c4cd82cc52"
     },
     {
         "path": "anotador-de-objetos.html",
         "type": "file",
-        "md5": "6350fb8dfe6b04e3d8fc24c8b48fc696"
+        "md5": "0208a567d27b31aee3d2abcddb16ba4b"
     },
     {
         "path": "assets",
@@ -82,7 +82,7 @@
     {
         "path": "/assets/js/custom-components.js",
         "type": "file",
-        "md5": "2f5e9407b4d5fa2cf7284a74ef3a82f7"
+        "md5": "e0d96b772ffa0af925689c2937ea978e"
     },
     {
         "path": "assets/js/osd_icons",
@@ -312,7 +312,7 @@
     {
         "path": "creditos.html",
         "type": "file",
-        "md5": "e626831f4ee1b4db4648083163df4e60"
+        "md5": "b5b44e747aefbe3f894fbf573957b828"
     },
     {
         "path": "cultural-magazines-from-modernismo-to-avant-garde-processes-of-modernization-and-transnational-networks.html",
@@ -322,7 +322,7 @@
     {
         "path": "explorador-de-colecciones.html",
         "type": "file",
-        "md5": "9f064fcccc706aea5799f5d25a7acc7d"
+        "md5": "cfc6e6ac8634e0ba067907a4b394c07c"
     },
     {
         "path": "feed.json",
@@ -352,7 +352,7 @@
     {
         "path": "index.html",
         "type": "file",
-        "md5": "a46f7ac971363c7b3530b38899840460"
+        "md5": "ea830c614640489db3ed5df9ebe77d4a"
     },
     {
         "path": "judith-rideout-voices-from-a-lost-world-when-rare-oriental-texts-are-dusted-off-in-a-spanish-bazaar.html",
@@ -372,12 +372,17 @@
     {
         "path": "/media/files/contributors.csv",
         "type": "file",
-        "md5": "a48f4826a3c8bd2fad5a10251a78ce5a"
+        "md5": "d55f4b4d79b2ad8269f49b48a3184ccb"
     },
     {
         "path": "/media/files/contributors.js",
         "type": "file",
-        "md5": "b37dd5522e03e256b43289c104ef32f0"
+        "md5": "43695b6d8baa9b437826147cfabaa48b"
+    },
+    {
+        "path": "/media/files/Copia de contributors.csv",
+        "type": "file",
+        "md5": "a48f4826a3c8bd2fad5a10251a78ce5a"
     },
     {
         "path": "media/files/imagenes-repositorios",
@@ -942,12 +947,12 @@
     {
         "path": "/media/files/repositories.js",
         "type": "file",
-        "md5": "821645565989ea0702b2feb839b19a76"
+        "md5": "cbfc1f979ba5658267a0589e0de5f06d"
     },
     {
         "path": "/media/files/repositorios.csv",
         "type": "file",
-        "md5": "ae4853aa246440bd0160596a1ddb46d4"
+        "md5": "ee84ac66e289fd903bbdbb0441c73bad"
     },
     {
         "path": "/media/files/repositorios_revistas_digitalizadas - Dataset.csv",
@@ -2012,12 +2017,12 @@
     {
         "path": "publicaciones.html",
         "type": "file",
-        "md5": "d19a9ef19c353d3065e8c8cfd6b82108"
+        "md5": "c3a70782f1c7244e2f713c49bff586f9"
     },
     {
         "path": "red-de-participantes.html",
         "type": "file",
-        "md5": "4a24c033b9c13413dd4ee95cc73769b9"
+        "md5": "20fd28510faaf12be24f8dd839e39e61"
     },
     {
         "path": "robots.txt",
@@ -2032,7 +2037,7 @@
     {
         "path": "sitemap.xml",
         "type": "file",
-        "md5": "f129d0c018852c1eb252cc79ecf10862"
+        "md5": "d2a860ead03a49e1f06eac5c764be544"
     },
     {
         "path": "sitemap.xsl",

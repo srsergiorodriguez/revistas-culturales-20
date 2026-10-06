@@ -12,7 +12,7 @@
   let filterConfigs = $derived(
     filters ? filters.split(',').map(s => {
       const label = s.trim();
-      const key = label.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      const key = label.toLowerCase(); // Se eliminó la normalización que borraba las tildes
       return { label, key };
     }) : []
   );
@@ -20,11 +20,11 @@
   let displayConfigs = $derived(
     modalFields ? modalFields.split(',').map(s => {
       const label = s.trim();
-      const key = label.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      const key = label.toLowerCase(); // Se eliminó la normalización que borraba las tildes
       return { label, key };
     }) : []
   );
-
+  
   let displayFields = $derived(
     modalFields ? modalFields.split(',').map(s => s.trim().toLowerCase()) : []
   );
