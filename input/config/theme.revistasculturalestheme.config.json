@@ -16,10 +16,12 @@
         "fontSize": "16",
         "footerLogos": [
             {
-                "logoImage": "media/website/logoTubingen.png"
+                "logoImage": "media/website/logoTubingen.png",
+                "logoLink": "https://uni-tuebingen.de/en/"
             },
             {
-                "logoImage": "media/website/logoExploratorio.png"
+                "logoImage": "media/website/logoExploratorio.png",
+                "logoLink": "https://exploratoriohd.net/"
             }
         ]
     },
