@@ -33,7 +33,7 @@
         "authorImages": true,
         "searchPage": true,
         "errorPage": true,
-        "customSearch": true, 
+        "customSearch": true,
         "customComments": true,
         "embedConsents": true,
         "pages": true,
@@ -165,17 +165,17 @@
             },
             "structure": [
                 {
-                "name": "logoImage",
-                "label": "Upload Logo",
-                "type": "upload",
-                "width": 50
+                    "name": "logoImage",
+                    "label": "Upload Logo",
+                    "type": "upload",
+                    "width": 50
                 },
                 {
-                "name": "logoLink",
-                "label": "Website Link (Optional)",
-                "type": "text",
-                "placeholder": "https://...",
-                "width": 50
+                    "name": "logoLink",
+                    "label": "Website Link (Optional)",
+                    "type": "text",
+                    "placeholder": "https://...",
+                    "width": 50
                 }
             ]
         }
@@ -347,6 +347,6 @@
     "postTemplates": {},
     "extensions": {
         "postEditorConfigOverride": true,
-        "postEditorCustomScript": true
+        "postEditorCustomScript": false
     }
 }
